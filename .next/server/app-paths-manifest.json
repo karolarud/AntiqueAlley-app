@@ -1,0 +1,9 @@
+{
+  "/page": "app/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/api/getProducts/route": "app/api/getProducts/route.js",
+  "/cart/page": "app/cart/page.js",
+  "/api/getWeather/route": "app/api/getWeather/route.js",
+  "/api/getCartItems/route": "app/api/getCartItems/route.js",
+  "/api/removeFromCart/route": "app/api/removeFromCart/route.js"
+}
