@@ -25,7 +25,7 @@ export default function Page() {
 
 	console.log("putting in cart: " + pname)
 
-	fetch("http://localhost:3000/api/putInCart?pname="+pname);
+	fetch("api/putInCart?pname="+pname);
  
   }
 
@@ -34,13 +34,13 @@ export default function Page() {
 
  
   useEffect(() => {
-	fetch('http://localhost:3000/api/getProducts')
+	fetch('api/getProducts')
   	.then((res) => res.json())
   	.then((data) => {
     	setData(data)
   	})
 
-	  fetch('http://localhost:3000/api/getWeather')
+	  fetch('api/getWeather')
       .then((res) => res.json())
       .then((weather) => {
         setWeatherData(weather)
