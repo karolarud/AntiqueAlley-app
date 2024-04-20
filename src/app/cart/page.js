@@ -81,7 +81,7 @@ export default function CartPage() {
             <div style={{ padding: '20px',  textAlign:'center' }} key={item._id}>
               Unique ID: {item._id} 
               <br></br>
-              Product Name: {item.pname}
+              Product Name: <strong>{item.pname}</strong>
               <br></br>
               <IconButton onClick={() => handleRemoveFromCart(item.pname)} variant="outlined" aria-label="Remove from cart"> 
 			               Delete

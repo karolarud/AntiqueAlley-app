@@ -106,7 +106,7 @@ export default function Page() {
 			<br></br>
         	Unique ID: {item._id} 
         	<br></br>
-        	{item.pname} - {item.price}
+        	<strong>{item.pname} -  {item.price}</strong>
         	<br></br>
         	<IconButton  onClick={() => putInCart(item.pname)}  variant="outlined" aria-label="Add to cart"> 
 			Add to cart 
