@@ -12,7 +12,6 @@ import { createTheme } from '@mui/material/styles';
 import { orange} from '@mui/material/colors';
 import { useState, useEffect } from 'react';
 
-//import { withIronSessionApiRoute } from "iron-session/next";
 
 
 export default function Page() {
@@ -68,7 +67,7 @@ export default function Page() {
  
   return (
 	<ThemeProvider theme={theme}>
-		Today's temperature: {JSON.stringify(weather.temp)}
+		<strong>Today's temperature: {JSON.stringify(weather.temp)}</strong>
 	<Container component="main"  maxWidth="xs">
  
    	<div style={{fontSize: '40px', fontFamily:'Garamond',  fontWeight: 'bold', textAlign:'center', color:'orange', paddingTop: '20px'}} > Hello User! 

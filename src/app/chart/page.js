@@ -74,7 +74,7 @@ export default function Page() {
 
  
   useEffect(() => {
-    fetch('http://localhost:3000/api/getChartData')
+    fetch('api/getChartData')
       .then((res) => res.json())
       .then((data) => {
         setData(data)
