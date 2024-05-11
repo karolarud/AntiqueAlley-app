@@ -1,6 +1,5 @@
 'use client';
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -16,13 +15,13 @@ import { createTheme } from '@mui/material/styles';
 import { orange } from '@mui/material/colors';
 
 
+// Define a functional component that handles user login
 export default function Page() {
-
-
 
   /*
   This function does the actual work
   calling the fetch to get things from the database.
+  This function performs the API call to authenticate the user.
   */ 
   async function runDBCallAsync(url) {
 
@@ -30,7 +29,7 @@ export default function Page() {
     const res = await fetch(url);
     const data = await res.json();
 
- 
+  // Check if the login is valid and log the result
     if(data.data== "valid"){
       console.log("login is valid!")
 
@@ -43,7 +42,7 @@ export default function Page() {
 
 
   /*
-
+  Handle the form submission event.
   When the button is clicked, this is the event that is fired.
   The first thing we need to do is prevent the default refresh of the page.
   */
@@ -51,8 +50,7 @@ export default function Page() {
 		
 		console.log("handling submit");
 
-
-    event.preventDefault();
+    event.preventDefault(); // Prevent default form submission behavior
   
 		const data = new FormData(event.currentTarget);
 
@@ -63,10 +61,8 @@ export default function Page() {
     console.log("Sent email:" + email)
     console.log("Sent pass:" + pass)
 
-
+    // Perform the login operation
     runDBCallAsync(`api/login?email=${email}&pass=${pass}`)
-
-
 
 
   }; // end handler
@@ -74,12 +70,12 @@ export default function Page() {
 
 
 
-  
+  // Create a theme instance to customize Material-UI components
   const theme = createTheme({
     palette: {
      
       secondary: {
-        main: orange[500],
+        main: orange[500], // Using orange color for secondary palette
       },
     },
   });
@@ -87,7 +83,7 @@ export default function Page() {
 
 
 
-  
+  // Render the login form and page layout
   return (
     
     <ThemeProvider theme={theme}>
@@ -101,10 +97,13 @@ export default function Page() {
           flexDirection: 'column',
           alignItems: 'center',
         }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          
-        </Avatar>
+      > <div className='app'>
+        
+        <img src='images/logo.png' alt="" width={250}  />
+        
+        </div>
+        
+        <br></br>
         <Typography component="h1" variant="h5" fontSize= '40px' fontFamily='Garamond'  fontWeight= 'bold'>
           Log In
         </Typography>

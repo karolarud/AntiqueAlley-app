@@ -70,6 +70,8 @@ export default function Page() {
 		<strong>Today's temperature: {JSON.stringify(weather.temp)}</strong>
 	<Container component="main"  maxWidth="xs">
  
+	
+	
    	<div style={{fontSize: '40px', fontFamily:'Garamond',  fontWeight: 'bold', textAlign:'center', color:'orange', paddingTop: '20px'}} > Hello User! 
 		<div style={{float:'right'}}> 
 	<IconButton href='/' variant="outlined" aria-label="logout" >
