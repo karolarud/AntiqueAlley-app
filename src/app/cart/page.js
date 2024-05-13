@@ -11,6 +11,7 @@ import Snackbar from '@mui/material/Snackbar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { orange } from '@mui/material/colors';
 
+
 // Defining the main CartPage functional component
 export default function CartPage() {
 
@@ -63,7 +64,7 @@ export default function CartPage() {
   const handleSubmitOrder = () => {
     const orderDetails = {
         items: Object.values(cart), // Extract cart items as an array
-        timestamp: new Date(),  // Attach a timestamp for the order
+       // timestamp: new Date(),  // Attach a timestamp for the order
     };
 
     // Call API to submit the order
@@ -92,6 +93,7 @@ export default function CartPage() {
 
 // Function to handle snackbar close event
 const handleCloseSnackbar = (event, reason) => {
+  console.log('Snackbar close reason:', reason);
     if (reason === 'clickaway') {
         return;
     }
@@ -114,6 +116,7 @@ const handleCloseSnackbar = (event, reason) => {
       <div style={{textAlign:'center', paddingTop: '20px'}}> 
         <img src='images/logo2.png' alt="" width={200}  />
       </div>
+
       <div style={{fontSize: '40px', fontFamily:'Garamond',  fontWeight: 'bold', textAlign:'center', color:'orange', paddingTop: '50px'}} > Shopping Cart
       <div style={{float:'right'}}> 
 	<IconButton href='/' variant="outlined" aria-label="logout" >
@@ -134,20 +137,29 @@ const handleCloseSnackbar = (event, reason) => {
               <br></br>
               Product Name: <strong>{item.pname}</strong>
               <br></br>
-              <IconButton onClick={() => handleRemoveFromCart(item.pname)} variant="outlined" aria-label="Remove from cart"> 
+              <IconButton onClick={() => handleRemoveFromCart(item.pname)} 
+                          variant="outlined" aria-label="Remove from cart"> 
 			               Delete
                     <DeleteForeverIcon style={{color:"orange", fontSize: '30px', paddingRight: '6px'}}/> 
               </IconButton>
             </div>
           ))}
           <center>
-          <Button color="secondary" variant="contained" onClick={handleSubmitOrder} style={{ fontFamily: 'Garamond', fontWeight: 'bold', textAlign: 'center', marginTop: '20px' }}>
+          <Button color="secondary" 
+                  variant="contained" 
+                  onClick={handleSubmitOrder} 
+                  style={{ fontFamily: 'Garamond', fontWeight: 'bold', textAlign: 'center', marginTop: '20px' }}>
                         Submit Order
           </Button>
           </center>
         </div>
-        <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar} message={snackbarMessage} />
-        
+        <Snackbar 
+            open={snackbarOpen} 
+            autoHideDuration={4000} 
+            onClose={handleCloseSnackbar} 
+            message={snackbarMessage} 
+        />
+         
       </Container>
     </ThemeProvider>
   );

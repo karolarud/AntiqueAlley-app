@@ -1,6 +1,5 @@
 'use client';
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -15,22 +14,21 @@ import {ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 import {orange } from '@mui/material/colors';
 
-
+// Define a functional component for registration page
 export default function Page() {
-
-
 
   /*
   This function does the actual work
   calling the fetch to get things from the database.
   */ 
+  // Function to handle asynchronous database calls
   async function runDBCallAsync(url) {
 
 
     const res = await fetch(url);
     const data = await res.json();
 
-
+    // Log whether the registration was successful or not
     if(data.data== "true"){
       console.log("registered")
 
@@ -43,10 +41,10 @@ export default function Page() {
 
 
   /*
-
   When the button is clicked, this is the event that is fired.
   The first thing we need to do is prevent the default refresh of the page.
   */
+  // Function to handle form submission
 	const handleSubmit = (event) => {
 		
 		console.log("handling submit");
@@ -56,7 +54,7 @@ export default function Page() {
   
 		const data = new FormData(event.currentTarget);
 
-
+    // Extract form data
     let email = data.get('email')
 		let pass = data.get('pass')
     let name = data.get('name')
@@ -65,6 +63,8 @@ export default function Page() {
     let phoneNumber = data.get('phoneNumber')
     let secondEmail = data.get('secondEmail')
     let secondPass = data.get('secondPass')
+
+    // Log form data for debugging purposes
     console.log("Sent email:" + email)
     console.log("Sent pass:" + pass)
     console.log("Sent name:" + name)
@@ -74,6 +74,7 @@ export default function Page() {
     console.log("Sent secondEmail:" + secondEmail)
     console.log("Sent secondPass:" + secondPass)
 
+    // Perform registration by calling the database API
     runDBCallAsync(`api/register?email=${email}&pass=${pass}&name=${name}&dob=${dob}&address=${address}&phoneNumber=${phoneNumber}&secondEmail=${secondEmail}&secondPass=${secondPass}`)
 
   }; // end handler
@@ -81,7 +82,7 @@ export default function Page() {
 
 
 
-  
+  // Create a custom theme for styling
   const theme = createTheme({
     palette: {
      
@@ -107,7 +108,9 @@ export default function Page() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}></Avatar>
+          <div style={{textAlign:'center', paddingBottom: '20px'}}> 
+            <img src='images/logo2.png' alt="" width={200}  />
+          </div>
           <Typography component="h1" variant="h5" fontSize= '40px' fontFamily='Garamond'  fontWeight= 'bold'>Register</Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField

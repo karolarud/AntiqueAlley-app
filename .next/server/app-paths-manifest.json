@@ -1,3 +1,10 @@
 {
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/api/getProducts/route": "app/api/getProducts/route.js",
+  "/api/login/route": "app/api/login/route.js",
+  "/api/getWeather/route": "app/api/getWeather/route.js",
+  "/api/getCartItems/route": "app/api/getCartItems/route.js",
+  "/cart/page": "app/cart/page.js",
+  "/api/putInCart/route": "app/api/putInCart/route.js"
 }

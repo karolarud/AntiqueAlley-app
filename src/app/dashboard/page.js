@@ -17,9 +17,9 @@ import { useState, useEffect } from 'react';
 export default function Page() {
 
 
-  //
-  // function for putting items into the shopping cart.
-  //
+  
+  // Function for putting items into the shopping cart.
+  
   function putInCart(pname){
 
 	console.log("putting in cart: " + pname)
@@ -28,10 +28,11 @@ export default function Page() {
  
   }
 
+  // State to store product data and weather data
   const [data, setData] = useState(null)
   const [weather, setWeatherData] = useState(0)
 
- 
+  // Fetch product and weather data on component mount
   useEffect(() => {
 	fetch('api/getProducts')
   	.then((res) => res.json())
@@ -47,11 +48,11 @@ export default function Page() {
 
   }, [])
  
-
+  // If product data is not available, display "No data"
   if (!data) return <p>No data</p>
 
 
- 
+ 	// Create a custom theme for styling
   const theme = createTheme({
 	palette: {
 	 
@@ -62,12 +63,12 @@ export default function Page() {
   });
  
 
-
+   // If weather data is not available, display "No weather"
   if (!weather) return <p>No weather</p>
  
   return (
 	<ThemeProvider theme={theme}>
-		<strong>Today's temperature: {JSON.stringify(weather.temp)}</strong>
+		<strong  style={{fontSize: '20px'}}>Today's temperature: {JSON.stringify(weather.temp)}</strong>
 	<Container component="main"  maxWidth="xs">
  
 	
@@ -102,6 +103,7 @@ export default function Page() {
 	</center>
     	<div style={{paddingTop: '40px'}}>
   	{
+		// Map through product data and display each product with add to cart button
     	data.map((item, i) => (
       	<div style={{padding: '15px', textAlign:'center'}} key={i} >
 			<br></br>

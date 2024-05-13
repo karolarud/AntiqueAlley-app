@@ -1,5 +1,5 @@
 'use client';
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -10,138 +10,112 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 import { orange } from '@mui/material/colors';
+import FormControl from '@mui/material/FormControl';
+import Alert from '@mui/material/Alert'; // Import Alert for displaying messages
 
-
-// Define a functional component that handles user login
 export default function Page() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [error, setError] = useState(''); // State to hold the error message
 
-  /*
-  This function does the actual work
-  calling the fetch to get things from the database.
-  This function performs the API call to authenticate the user.
-  */ 
-  async function runDBCallAsync(url) {
-
-
-    const res = await fetch(url);
-    const data = await res.json();
-
-  // Check if the login is valid and log the result
-    if(data.data== "valid"){
-      console.log("login is valid!")
-
-      
-    } else {
-
-      console.log("not valid  ")
+  async function runDBCallAsync(email, pass) {
+    if (!email || !pass) { // Check if email or password is empty
+      setError("Please enter both email and password.");
+      return;
+    }
+    try {
+      const res = await fetch(`api/login?email=${email}&pass=${pass}`);
+      const data = await res.json();
+      if (data.data === "true") {
+        setIsLoggedIn(true);
+      } else {
+        setError("Login not valid. Please check your credentials."); // Set error for invalid login
+      }
+    } catch (error) {
+      console.error('API call failed:', error);
+      setError('Failed to connect to the server. Please try again.'); // Set error for server issues
     }
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const email = data.get('email').trim();
+    const pass = data.get('pass').trim();
+    runDBCallAsync(email, pass);
+  };
 
-  /*
-  Handle the form submission event.
-  When the button is clicked, this is the event that is fired.
-  The first thing we need to do is prevent the default refresh of the page.
-  */
-	const handleSubmit = (event) => {
-		
-		console.log("handling submit");
+  useEffect(() => {
+    if (isLoggedIn) {
+      window.location.href = '/dashboard';
+    }
+  }, [isLoggedIn]);
 
-    event.preventDefault(); // Prevent default form submission behavior
-  
-		const data = new FormData(event.currentTarget);
-
-
-    let email = data.get('email')
-		let pass = data.get('pass')
-
-    console.log("Sent email:" + email)
-    console.log("Sent pass:" + pass)
-
-    // Perform the login operation
-    runDBCallAsync(`api/login?email=${email}&pass=${pass}`)
-
-
-  }; // end handler
-
-
-
-
-  // Create a theme instance to customize Material-UI components
   const theme = createTheme({
     palette: {
-     
       secondary: {
-        main: orange[500], // Using orange color for secondary palette
+        main: orange[500],
       },
     },
   });
-  
 
-
-
-  // Render the login form and page layout
   return (
-    
     <ThemeProvider theme={theme}>
-      
-    <Container component="main"  maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      > <div className='app'>
-        
-        <img src='images/logo.png' alt="" width={250}  />
-        
-        </div>
-        
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        > 
+        <Box className='app'>
+          <img src='images/logo.png' alt="" width={250} />
+        </Box>
         <br></br>
-        <Typography component="h1" variant="h5" fontSize= '40px' fontFamily='Garamond'  fontWeight= 'bold'>
+        <Typography component="h1" variant="h5" fontSize='40px' fontFamily='Garamond' fontWeight='bold'>
           Log In
         </Typography>
-        <br></br>
         <div>Hi there! Nice to see you again.</div>
         
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-        <br></br>
-          <TextField
-            color="secondary"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            color="secondary"
-            margin="normal"
-            required
-            fullWidth
-            name="pass"
-            label="Password"
-            type="pass"
-            id="pass"
-            autoComplete="current-password"
-          />
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{width: '100%', mt: 2 }}>
+          <FormControl fullWidth>
+            <TextField
+              color="secondary"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              type="email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              color="secondary"
+              margin="normal"
+              required
+              fullWidth
+              name="pass"
+              label="Password"
+              type="password"
+              id="pass"
+              autoComplete="current-password"
+            />
+          </FormControl>
+          {error && <Alert severity="error" sx={{ width: '100%', mt: 2 }}>{error}</Alert>} {/* Display error message */}
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <br></br>
-          <Button color="secondary" style={{fontFamily:'Garamond',  fontWeight: 'bold', textAlign:'center', color:"white"}}
-          Log In
-          Link href="dashboard"
+          <Button
+            color="secondary"
+            style={{ fontFamily: 'Garamond', fontWeight: 'bold', color: "white" }}
             type="submit"
             fullWidth
             variant="contained"
@@ -150,29 +124,21 @@ export default function Page() {
             Sign in
           </Button>
 
-
-
-
           <Grid container>
             <Grid item xs>
-              <br></br>
               <Link color="secondary" href="#" variant="body2">
-                Forgot password?
+                {"Forgot password?"}
               </Link>
             </Grid>
             <Grid item>
-            <br></br>
               <Link color="secondary" href="register" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
           </Grid>
         </Box>
-      </Box>
-
-    </Container>
-
+        </Box>
+      </Container>
     </ThemeProvider>
-
   );
 }
